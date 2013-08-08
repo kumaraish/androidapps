@@ -14,7 +14,6 @@ public class OscItemsListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		registerForContextMenu(getListView());
 	}
 
@@ -31,13 +30,10 @@ public class OscItemsListFragment extends ListFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			Log.d("aish", "deletemenu");
 			return true;
 		case Menu.FIRST + 1:
-			Log.d("aish", "editmenu");
 			return true;
 		default:
-
 			return super.onContextItemSelected(item);
 		}
 	}
