@@ -7,9 +7,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.MultiAutoCompleteTextView;
 
 public class NewItemFragment extends Fragment {
+	
+	private static final String[] SDLC_PHASES = new String[] {
+        "Analysis", "Design", "Coding", "Testing", "Activation"
+    };
 	
 	private OnNewItemAddedListener onNewItemAddedListener;
 	
@@ -18,12 +23,29 @@ public class NewItemFragment extends Fragment {
 	}
 	
 	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			onNewItemAddedListener = (OnNewItemAddedListener)activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString() +
+					" must implement OnNewItemAddedListener");
+		}
+	}
+	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.new_item_fragment, container, false);
 		
-		final EditText editText =
-				(EditText)view.findViewById(R.id.addItem);
+		final MultiAutoCompleteTextView editText =
+				(MultiAutoCompleteTextView)view.findViewById(R.id.newItem);
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
+				android.R.layout.simple_dropdown_item_1line, SDLC_PHASES);
+		
+		editText.setAdapter(adapter);
+		editText.setTokenizer(new TagsTokenizer());
 		
 		editText.setOnKeyListener(new View.OnKeyListener() {
 			@Override
@@ -42,15 +64,4 @@ public class NewItemFragment extends Fragment {
 		
 		return view;
 	}
-	
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		try {
-			onNewItemAddedListener = (OnNewItemAddedListener)activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() +
-					" must implement OnNewItemAddedListener");
-		}
-	}	
 }
