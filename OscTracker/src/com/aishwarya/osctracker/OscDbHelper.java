@@ -43,6 +43,12 @@ public class OscDbHelper {
 		return database.rawQuery("select * from " + TABLE_NAME, null);
 	}
 	
+	public void deleteOscActivityRecord(long id) {
+		String whereClause = TIMESHEET_COLUMN_ID + "=" + id;
+		String whereArgs[] = null;
+		database.delete(TABLE_NAME, whereClause, whereArgs);
+	}
+	
 	public class OscDbOpenHelper extends SQLiteOpenHelper {
 		OscDbOpenHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);

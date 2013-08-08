@@ -9,7 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 
 public class MainActivity extends FragmentActivity 
-	implements NewItemFragment.OnNewItemAddedListener {
+	implements NewItemFragment.OnNewItemAddedListener,
+				OscItemsListFragment.OnItemDeletedListener {
 	
 	private OscAdapter oscAdapter;
 	private OscDbHelper oscDbHelper;
@@ -39,6 +40,13 @@ public class MainActivity extends FragmentActivity
 	public void onNewItemAdded(String notes) {
 		Date date = new Date();
 		oscDbHelper.saveOscActivityRecord(DateFormat.getDateInstance().format(date), notes);
+		oscAdapter.changeCursor(oscDbHelper.getAllTimeRecords());
+		oscAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onItemDeleted(long id) {
+		oscDbHelper.deleteOscActivityRecord(id);
 		oscAdapter.changeCursor(oscDbHelper.getAllTimeRecords());
 		oscAdapter.notifyDataSetChanged();
 	}
