@@ -12,10 +12,6 @@ import android.widget.MultiAutoCompleteTextView;
 
 public class NewItemFragment extends Fragment {
 	
-	private static final String[] SDLC_PHASES = new String[] {
-        "Analysis", "Design", "Coding", "Testing", "Activation"
-    };
-	
 	private OnNewItemAddedListener onNewItemAddedListener;
 	
 	public interface OnNewItemAddedListener {
@@ -38,11 +34,13 @@ public class NewItemFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.new_item_fragment, container, false);
 		
+		String[] sdlc_phases = getResources().getStringArray(R.array.sdlc_phases_array);
+
 		final MultiAutoCompleteTextView editText =
 				(MultiAutoCompleteTextView)view.findViewById(R.id.newItem);
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
-				android.R.layout.simple_dropdown_item_1line, SDLC_PHASES);
+				android.R.layout.simple_dropdown_item_1line, sdlc_phases);
 		
 		editText.setAdapter(adapter);
 		editText.setTokenizer(new TagsTokenizer());
