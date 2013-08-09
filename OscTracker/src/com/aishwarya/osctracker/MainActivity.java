@@ -2,6 +2,7 @@ package com.aishwarya.osctracker;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -52,15 +53,14 @@ public class MainActivity extends FragmentActivity
 	}
 
 	@Override
-	public void onItemDeleted(long id) {
-		oscDbHelper.deleteOscActivityRecord(id);
+	public void onItemDeleted(List<Long> ids) {
+		oscDbHelper.deleteOscActivityRecord(ids);
 		oscAdapter.changeCursor(oscDbHelper.getAllTimeRecords());
 		oscAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onItemEdited(long id, String date, String notes) {
-		Log.d("aish", date);
 		oscDbHelper.updateOscActivityRecord(id, date, notes);
 		oscAdapter.changeCursor(oscDbHelper.getAllTimeRecords());
 		oscAdapter.notifyDataSetChanged();

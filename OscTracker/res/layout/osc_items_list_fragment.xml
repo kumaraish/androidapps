@@ -3,7 +3,6 @@
     android:id="@android:id/list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:divider="@android:color/transparent"
-    android:dividerHeight="10.0sp"
-    android:padding="16dip"
-    android:clipToPadding="false"/>
+    android:divider="#323232"
+    android:dividerHeight="1dp"
+    android:padding="16dip"/>

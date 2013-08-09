@@ -1,10 +1,14 @@
 package com.aishwarya.osctracker;
 
+import java.util.Iterator;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class OscDbHelper {
 	
@@ -43,8 +47,23 @@ public class OscDbHelper {
 		return database.rawQuery("select * from " + TABLE_NAME, null);
 	}
 	
-	public void deleteOscActivityRecord(long id) {
-		String whereClause = TIMESHEET_COLUMN_ID + "=" + id;
+	public void deleteOscActivityRecord(List<Long> ids) {
+		Long id;
+		String whereClause = TIMESHEET_COLUMN_ID + " in (" ;
+		
+		Iterator<Long> myListIterator = ids.iterator(); 
+		while (true) {
+		    id = myListIterator.next();    
+		    whereClause += id;
+		    if (myListIterator.hasNext()) {
+		    	whereClause += ",";
+		    } else {
+		    	break;
+		    }
+		}
+		
+		whereClause += ")";
+		
 		String whereArgs[] = null;
 		database.delete(TABLE_NAME, whereClause, whereArgs);
 	}
