@@ -6,11 +6,12 @@ import java.util.Date;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 
 public class MainActivity extends FragmentActivity 
 	implements NewItemFragment.OnNewItemAddedListener,
-				OscItemsListFragment.OnItemDeletedListener {
+				OscItemsListFragment.OscItemsListFragmentListener {
 	
 	private OscAdapter oscAdapter;
 	private OscDbHelper oscDbHelper;
@@ -35,6 +36,12 @@ public class MainActivity extends FragmentActivity
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        oscDbHelper.closedb();
+    }	
 
 	@Override
 	public void onNewItemAdded(String notes) {
@@ -47,6 +54,14 @@ public class MainActivity extends FragmentActivity
 	@Override
 	public void onItemDeleted(long id) {
 		oscDbHelper.deleteOscActivityRecord(id);
+		oscAdapter.changeCursor(oscDbHelper.getAllTimeRecords());
+		oscAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onItemEdited(long id, String date, String notes) {
+		Log.d("aish", date);
+		oscDbHelper.updateOscActivityRecord(id, date, notes);
 		oscAdapter.changeCursor(oscDbHelper.getAllTimeRecords());
 		oscAdapter.notifyDataSetChanged();
 	}

@@ -49,6 +49,17 @@ public class OscDbHelper {
 		database.delete(TABLE_NAME, whereClause, whereArgs);
 	}
 	
+	public void updateOscActivityRecord(long id, String date, String notes) {
+		String whereClause = TIMESHEET_COLUMN_ID + "=" + id;
+		String whereArgs[] = null;
+		try {
+			ContentValues contentValues = new ContentValues();
+			contentValues.put(TIMESHEET_COLUMN_DATE, date);
+			contentValues.put(TIMESHEET_COLUMN_NOTES, notes);
+			database.update(TABLE_NAME, contentValues, whereClause, whereArgs);
+		} catch (Exception e) { e.printStackTrace(); }
+	}
+	
 	public class OscDbOpenHelper extends SQLiteOpenHelper {
 		OscDbOpenHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);

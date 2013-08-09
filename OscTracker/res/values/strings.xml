@@ -3,7 +3,11 @@
 
     <string name="app_name">Osc Tracker</string>
     <string name="action_settings">Settings</string>
-    <string name="addItemHint">Add new item</string>
+    <string name="addItemHint">Use #tags to display drop down</string>
+    <string name="editNotes">Note</string>
+    <string name="editDate">Date</string>
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
     
  	<string-array name="sdlc_phases_array">
         <item>Analysis</item>
@@ -15,6 +19,5 @@
         <item>Codeprop</item>
         <item>MUT</item>
     </string-array>
-    
 
 </resources>
